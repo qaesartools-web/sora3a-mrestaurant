@@ -72,9 +72,6 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
 .cart-total-v{font-weight:900;color:var(--orange2);font-size:13px;}
 .send-btn{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--orange),#c0392b);color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
 .send-btn:disabled{opacity:.4;cursor:not-allowed;}
-.send-wrap{position:fixed;bottom:50px;right:0;width:200px;padding:7px 9px;background:var(--panel);border-top:2px solid var(--orange);border-right:1px solid var(--line);z-index:120;}
-@media(min-width:900px){.send-wrap{width:280px;}}
-@media(max-width:400px){.send-wrap{width:150px;}}
 
 /* MODALS */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
@@ -198,6 +195,7 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
           <input class="cust-in" id="custName" placeholder="اسم الزبون">
           <input class="cust-in" id="custPhone" placeholder="رقم الهاتف" type="tel">
           <input class="cust-in" id="custAddr" placeholder="العنوان">
+          <button class="send-btn" id="sendBtn" disabled onclick="openOrderType()">🚀 ترحيل الطلب</button>
         </div>
         <div class="cart-items" id="cartItems"><div class="cart-empty">السلة فارغة</div></div>
         <div class="cart-bot">
@@ -206,7 +204,6 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
       </div>
     </div>
   </div>
-  <div class="send-wrap"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span>المجموع</span><span style="font-weight:900;color:var(--orange2);" id="cartTotal2">٠ د.ع</span></div><button class="send-btn" id="sendBtn" disabled onclick="openOrderType()">🚀 ترحيل الطلب</button></div>
 
   <!-- ORDERS SCREEN -->
   <div class="screen" id="ordersScreen">
@@ -527,7 +524,6 @@ function renderCart(){
     </div>`).join('');}
   const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
   document.getElementById('cartTotal').textContent=fmt(total)+' د.ع';
-  const t2=document.getElementById('cartTotal2');if(t2)t2.textContent=fmt(total)+' د.ع';
   document.getElementById('cartCnt').textContent=toA(cart.reduce((s,c)=>s+c.qty,0))+' عنصر';
   document.getElementById('sendBtn').disabled=cart.length===0;
 }
