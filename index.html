@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>سرعة - المطعم</title>
-<meta name="version" content="1780291369">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -227,9 +226,103 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
     </div>
   </div>
 
+
+  <!-- REPORTS SCREEN -->
+  <div class="screen" id="reportsScreen">
+    <div style="padding:12px;padding-bottom:70px;max-width:600px;margin:0 auto;">
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;">
+        <div style="font-size:14px;font-weight:900;margin-bottom:12px;">🗓️ الفترة الزمنية</div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <div style="flex:1"><div style="font-size:11px;color:var(--muted);margin-bottom:4px;">من</div>
+          <input type="date" id="repFrom" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px;color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;outline:none;" onchange="renderReports()"></div>
+          <div style="flex:1"><div style="font-size:11px;color:var(--muted);margin-bottom:4px;">إلى</div>
+          <input type="date" id="repTo" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px;color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;outline:none;" onchange="renderReports()"></div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button onclick="setRepPreset('today')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;cursor:pointer;">اليوم</button>
+          <button onclick="setRepPreset('week')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;cursor:pointer;">أسبوع</button>
+          <button onclick="setRepPreset('month')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;cursor:pointer;">شهر</button>
+          <button onclick="setRepPreset('year')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;cursor:pointer;">سنة</button>
+        </div>
+      </div>
+
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;">
+        <div style="font-size:14px;font-weight:900;margin-bottom:12px;">📊 ملخص الفترة</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px;">
+          <div style="background:var(--panel2);border-radius:10px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:900;color:var(--orange);" id="repTotal">0</div>
+            <div style="font-size:11px;color:var(--muted);">إجمالي المبيعات (د.ع)</div>
+          </div>
+          <div style="background:var(--panel2);border-radius:10px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:900;color:var(--orange);" id="repCount">0</div>
+            <div style="font-size:11px;color:var(--muted);">عدد الطلبات</div>
+          </div>
+          <div style="background:var(--panel2);border-radius:10px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:900;color:var(--success);" id="repDelivered">0</div>
+            <div style="font-size:11px;color:var(--muted);">مسلّمة</div>
+          </div>
+          <div style="background:var(--panel2);border-radius:10px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:900;color:var(--orange2);" id="repAvg">0</div>
+            <div style="font-size:11px;color:var(--muted);">متوسط الطلب (د.ع)</div>
+          </div>
+        </div>
+        <button onclick="printReport()" style="width:100%;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🖨️ طباعة التقرير</button>
+      </div>
+
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;">
+        <div style="font-size:14px;font-weight:900;margin-bottom:12px;">📋 تفاصيل الطلبات</div>
+        <div id="repOrdersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU MANAGEMENT SCREEN -->
+  <div class="screen" id="menuScreen">
+    <div style="padding:12px;padding-bottom:70px;max-width:600px;margin:0 auto;">
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <button onclick="showMenuTab('add')" id="mTabAdd" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--orange);background:var(--orange);color:#fff;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;cursor:pointer;">➕ إضافة صنف</button>
+        <button onclick="showMenuTab('list')" id="mTabList" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--line);background:transparent;color:var(--muted);font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;cursor:pointer;">📋 الأصناف</button>
+      </div>
+
+      <!-- ADD ITEM -->
+      <div id="menuAddSection">
+        <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;">
+          <div style="margin-bottom:10px;">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">اسم الصنف *</div>
+            <input id="newItemName" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:13px;outline:none;" placeholder="مثال: برغر خاص">
+          </div>
+          <div style="margin-bottom:10px;">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">الكاتيغوري *</div>
+            <select id="newItemCat" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:13px;outline:none;"></select>
+          </div>
+          <div style="margin-bottom:10px;">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">صورة الصنف</div>
+            <div id="imgUploadBox" style="border:2px dashed var(--line);border-radius:10px;padding:16px;text-align:center;cursor:pointer;position:relative;overflow:hidden;" onclick="document.getElementById('imgFileInput').click()">
+              <div id="imgPreview" style="font-size:28px;margin-bottom:4px;">📷</div>
+              <div style="font-size:12px;color:var(--muted);">اضغط لاختيار صورة</div>
+              <input type="file" id="imgFileInput" accept="image/*" style="display:none;" onchange="handleNewImg(event)">
+            </div>
+          </div>
+          <div style="margin-bottom:10px;">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">الأسعار *</div>
+            <div id="newVarsList"></div>
+            <button onclick="addNewVar()" style="width:100%;padding:8px;border-radius:8px;border:1px dashed var(--line);background:transparent;color:var(--muted);font-family:Tajawal,sans-serif;font-size:12px;cursor:pointer;">+ إضافة حجم/سعر</button>
+          </div>
+          <button onclick="saveNewItem()" style="width:100%;padding:12px;border-radius:12px;border:none;background:var(--orange);color:#fff;font-family:Tajawal,sans-serif;font-size:14px;font-weight:700;cursor:pointer;">✅ حفظ الصنف</button>
+        </div>
+      </div>
+
+      <!-- ITEMS LIST -->
+      <div id="menuListSection" style="display:none;">
+        <div id="menuItemsList"></div>
+      </div>
+    </div>
+  </div>
   <nav class="bottom-nav">
     <button class="nav-btn on" id="navCashier" onclick="switchTab('cashier')"><div class="nav-icon">🧾</div><div>الكاشير</div></button>
     <button class="nav-btn" id="navOrders" onclick="switchTab('orders')"><div class="nav-icon">📋</div><div>الطلبات</div></button>
+    <button class="nav-btn" id="navReports" onclick="switchTab('reports')"><div class="nav-icon">📊</div><div>التقارير</div></button>
+    <button class="nav-btn" id="navMenu" onclick="switchTab('menu')"><div class="nav-icon">⚙️</div><div>المنيو</div></button>
   </nav>
 </div>
 
@@ -686,13 +779,211 @@ function renderOrders(){
     </div>`).join('');
 }
 
-// NAV
+
+
+// ── SWITCH TAB ──
 window.switchTab=function(tab){
+  ['cashier','orders','reports','menu'].forEach(t=>{
+    const s=document.getElementById(t+'Screen')||document.getElementById(t==='reports'?'reportsScreen':t==='menu'?'menuScreen':t+'Screen');
+    if(s) s.classList.toggle('on', t===tab);
+  });
   document.getElementById('cashierScreen').classList.toggle('on',tab==='cashier');
   document.getElementById('ordersScreen').classList.toggle('on',tab==='orders');
-  document.getElementById('navCashier').classList.toggle('on',tab==='cashier');
-  document.getElementById('navOrders').classList.toggle('on',tab==='orders');
+  document.getElementById('reportsScreen').classList.toggle('on',tab==='reports');
+  document.getElementById('menuScreen').classList.toggle('on',tab==='menu');
+  ['Cashier','Orders','Reports','Menu'].forEach(n=>{
+    const b=document.getElementById('nav'+n);
+    if(b) b.classList.toggle('on', n.toLowerCase()===tab);
+  });
+  if(tab==='reports') renderReports();
+  if(tab==='menu') initMenuManage();
 };
+
+// ── REPORTS ──
+window.setRepPreset=function(p){
+  const t=new Date(), f=new Date();
+  if(p==='today'){f.setHours(0,0,0,0);}
+  else if(p==='week'){f.setDate(t.getDate()-7);}
+  else if(p==='month'){f.setMonth(t.getMonth()-1);}
+  else if(p==='year'){f.setFullYear(t.getFullYear()-1);}
+  document.getElementById('repFrom').value=f.toISOString().slice(0,10);
+  document.getElementById('repTo').value=t.toISOString().slice(0,10);
+  renderReports();
+};
+
+window.renderReports=function(){
+  const from=document.getElementById('repFrom')?.value;
+  const to=document.getElementById('repTo')?.value;
+  const start=from?new Date(from+'T00:00:00').getTime():0;
+  const end=to?new Date(to+'T00:00:00').getTime()+86400000:Infinity;
+  const filtered=orders.filter(o=>{const t=o.createdAtMs||0;return t>=start&&t<end;});
+  const delivered=filtered.filter(o=>o.status==='delivered');
+  const total=delivered.reduce((s,o)=>s+(o.value||0),0);
+  const avg=delivered.length?Math.round(total/delivered.length):0;
+  document.getElementById('repTotal').textContent=fmt(total);
+  document.getElementById('repCount').textContent=filtered.length;
+  document.getElementById('repDelivered').textContent=delivered.length;
+  document.getElementById('repAvg').textContent=fmt(avg);
+  const badges={'pending':'🟡','accepted':'🔵','pickup':'🟠','delivering':'🛵','delivered':'✅','cancelled':'❌'};
+  document.getElementById('repOrdersList').innerHTML=filtered.length?filtered.map(o=>`
+    <div style="background:var(--panel2);border-radius:10px;padding:10px;margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-weight:700;">${o.id.substring(0,6).toUpperCase()}</span>
+        <span style="font-size:11px;color:var(--muted);">${o.createdAt||''}</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);">👤 ${o.customer||''} • 📞 ${o.phone||''}</div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px;">
+        <span style="font-size:12px;">${badges[o.status]||'⚪'} ${o.status}</span>
+        <span style="font-size:12px;font-weight:700;color:var(--orange2);">${fmt(o.value||0)} د.ع</span>
+      </div>
+    </div>`).join(''):'<div style="text-align:center;color:var(--muted);padding:20px;">لا توجد طلبات في هذه الفترة</div>';
+};
+
+window.printReport=function(){
+  const from=document.getElementById('repFrom')?.value||'—';
+  const to=document.getElementById('repTo')?.value||'—';
+  const total=document.getElementById('repTotal').textContent;
+  const count=document.getElementById('repCount').textContent;
+  const delivered=document.getElementById('repDelivered').textContent;
+  const avg=document.getElementById('repAvg').textContent;
+  const receipt=`<html><head><meta charset="UTF-8"><style>
+  body{font-family:Tajawal,Arial,sans-serif;direction:rtl;padding:16px;max-width:400px;margin:0 auto;}
+  h2{text-align:center;margin-bottom:4px;}
+  .sub{text-align:center;color:#555;font-size:12px;margin-bottom:12px;}
+  .div{border-top:1px dashed #000;margin:8px 0;}
+  .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
+  .total{font-size:18px;font-weight:900;}
+  </style></head><body>
+  <h2>🚀 تقرير سرعة</h2>
+  <div class="sub">${restData?.name||'المطعم'}</div>
+  <div class="div"></div>
+  <div class="row"><span>الفترة من:</span><span>${from}</span></div>
+  <div class="row"><span>إلى:</span><span>${to}</span></div>
+  <div class="div"></div>
+  <div class="row"><span>عدد الطلبات:</span><span>${count}</span></div>
+  <div class="row"><span>المسلّمة:</span><span>${delivered}</span></div>
+  <div class="row"><span>متوسط الطلب:</span><span>${avg} د.ع</span></div>
+  <div class="div"></div>
+  <div class="row total"><span>إجمالي المبيعات:</span><span>${total} د.ع</span></div>
+  </body></html>`;
+  let ifr=document.getElementById('prtFr');
+  if(!ifr){ifr=document.createElement('iframe');ifr.id='prtFr';ifr.style.cssText='position:fixed;top:-9999px;left:-9999px;width:400px;height:600px;border:none;';document.body.appendChild(ifr);}
+  ifr.onload=()=>{try{ifr.contentWindow.focus();ifr.contentWindow.print();}catch(e){}};
+  ifr.srcdoc=receipt;
+};
+
+// ── MENU MANAGEMENT ──
+let newVars=[{name:'وحدة',price:0}], newImgData='';
+
+window.showMenuTab=function(tab){
+  document.getElementById('menuAddSection').style.display=tab==='add'?'block':'none';
+  document.getElementById('menuListSection').style.display=tab==='list'?'block':'none';
+  document.getElementById('mTabAdd').style.background=tab==='add'?'var(--orange)':'transparent';
+  document.getElementById('mTabAdd').style.color=tab==='add'?'#fff':'var(--muted)';
+  document.getElementById('mTabAdd').style.borderColor=tab==='add'?'var(--orange)':'var(--line)';
+  document.getElementById('mTabList').style.background=tab==='list'?'var(--orange)':'transparent';
+  document.getElementById('mTabList').style.color=tab==='list'?'#fff':'var(--muted)';
+  document.getElementById('mTabList').style.borderColor=tab==='list'?'var(--orange)':'var(--line)';
+  if(tab==='list') renderMenuList();
+};
+
+window.initMenuManage=function(){
+  newVars=[{name:'وحدة',price:0}];newImgData='';
+  const sel=document.getElementById('newItemCat');
+  if(sel) sel.innerHTML=menu.map((c,i)=>`<option value="${i}">${c.emoji} ${c.cat}</option>`).join('');
+  renderNewVars();
+  showMenuTab('add');
+};
+
+window.renderNewVars=function(){
+  document.getElementById('newVarsList').innerHTML=newVars.map((v,i)=>`
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <input style="flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;outline:none;" placeholder="الاسم (وحدة/صغير...)" value="${v.name}" oninput="newVars[${i}].name=this.value">
+      <input style="width:80px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 8px;color:#f0f2f5;font-family:Tajawal,sans-serif;font-size:12px;outline:none;" placeholder="السعر" type="number" value="${v.price||''}" oninput="newVars[${i}].price=parseInt(this.value)||0">
+      ${newVars.length>1?`<button onclick="delNewVar(${i})" style="background:var(--danger);border:none;border-radius:6px;padding:6px 10px;color:#fff;cursor:pointer;font-size:12px;">✕</button>`:''}
+    </div>`).join('');
+};
+
+window.addNewVar=function(){newVars.push({name:'',price:0});renderNewVars();};
+window.delNewVar=function(i){newVars.splice(i,1);renderNewVars();};
+
+window.handleNewImg=function(e){
+  const file=e.target.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    newImgData=ev.target.result;
+    document.getElementById('imgPreview').innerHTML=`<img src="${newImgData}" style="width:100%;height:80px;object-fit:cover;border-radius:8px;">`;
+  };
+  r.readAsDataURL(file);
+};
+
+window.saveNewItem=function(){
+  const name=document.getElementById('newItemName').value.trim();
+  const catIdx=parseInt(document.getElementById('newItemCat').value);
+  if(!name){toast('⚠️ أدخل اسم الصنف');return;}
+  const variants=newVars.filter(v=>v.name&&v.price>0);
+  if(!variants.length){toast('⚠️ أضف سعراً واحداً');return;}
+  menu[catIdx].items.push({name,img:newImgData,variants});
+  localStorage.setItem('bw_menu',JSON.stringify(menu));
+  toast('✅ تم إضافة: '+name);
+  document.getElementById('newItemName').value='';
+  newImgData='';newVars=[{name:'وحدة',price:0}];
+  document.getElementById('imgPreview').innerHTML='<div style="font-size:28px;margin-bottom:4px;">📷</div>';
+  renderNewVars();
+  if(activeCat===catIdx) renderMenu();
+};
+
+window.renderMenuList=function(){
+  const all=[];menu.forEach((c,ci)=>c.items.forEach((p,pi)=>all.push({...p,catName:c.cat,emoji:c.emoji,ci,pi})));
+  document.getElementById('menuItemsList').innerHTML=all.map(p=>`
+    <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+      <div style="width:50px;height:50px;border-radius:8px;overflow:hidden;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">
+        ${p.img?`<img src="${p.img}" style="width:100%;height:100%;object-fit:cover;">`:`<span>${p.emoji}</span>`}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:700;">${p.name}</div>
+        <div style="font-size:11px;color:var(--muted);">${p.emoji} ${p.catName}</div>
+        <div style="font-size:11px;color:var(--orange2);">${p.variants.map(v=>fmt(v.price)+' د.ع').join(' / ')}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <label style="background:var(--info);border:none;border-radius:6px;padding:5px 8px;color:#fff;font-size:11px;cursor:pointer;text-align:center;">
+          📷<input type="file" accept="image/*" style="display:none;" onchange="updateItemImg(${p.ci},${p.pi},this)">
+        </label>
+        <button onclick="deleteItem(${p.ci},${p.pi})" style="background:var(--danger);border:none;border-radius:6px;padding:5px 8px;color:#fff;font-size:11px;cursor:pointer;">🗑️</button>
+      </div>
+    </div>`).join('');
+};
+
+window.updateItemImg=function(ci,pi,input){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    menu[ci].items[pi].img=ev.target.result;
+    localStorage.setItem('bw_menu',JSON.stringify(menu));
+    toast('✅ تم تحديث الصورة');
+    renderMenuList();
+    if(activeCat===ci) renderMenu();
+  };
+  r.readAsDataURL(file);
+};
+
+window.deleteItem=function(ci,pi){
+  if(!confirm('حذف "'+menu[ci].items[pi].name+'"؟'))return;
+  menu[ci].items.splice(pi,1);
+  localStorage.setItem('bw_menu',JSON.stringify(menu));
+  toast('🗑️ تم الحذف');
+  renderMenuList();
+  if(activeCat===ci) renderMenu();
+};
+
+// Load saved menu if exists
+(function(){
+  try{
+    const saved=localStorage.getItem('bw_menu');
+    if(saved) Object.assign(menu, JSON.parse(saved).reduce((acc,c,i)=>{if(menu[i])menu[i].items=c.items;return acc;},{}));
+  }catch(e){}
+})();
+
 </script>
 </body>
 </html>
