@@ -1,0 +1,17 @@
+{
+  "name": "سرعة - المطعم",
+  "short_name": "المطعم",
+  "description": "تطبيق كاشير مطعم سرعة",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/sora3a-mrestaurant/",
+  "scope": "/sora3a-mrestaurant/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d0f12",
+  "theme_color": "#ff6b3d",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
