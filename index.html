@@ -32,7 +32,7 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
 .logout-btn{background:transparent;border:1px solid var(--line);color:var(--danger);padding:5px 10px;border-radius:8px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:12px;}
 
 /* POS LAYOUT */
-.pos{display:flex;height:calc(100vh - 54px);}
+.pos{display:flex;height:calc(100vh - 54px);overflow:hidden;}
 .menu-col{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
 .menu-col::-webkit-scrollbar{width:0;}
 .cats{display:flex;gap:6px;padding:10px;overflow-x:auto;background:#0d0f12;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);}
@@ -49,7 +49,7 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
 .prod-badge{position:absolute;top:4px;right:4px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;border-radius:20px;padding:2px 6px;}
 
 /* CART */
-.cart-col{width:200px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;}
+.cart-col{width:200px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;}
 .cart-top{padding:9px 10px;border-bottom:1px solid var(--line);}
 .cart-title{font-size:13px;font-weight:900;}
 .cart-cnt{font-size:11px;color:var(--muted);}
@@ -67,7 +67,7 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
 .ci-btn{background:var(--panel);border:1px solid var(--line);border-radius:5px;width:19px;height:19px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;cursor:pointer;flex-shrink:0;}
 .ci-del{color:var(--danger);font-size:12px;cursor:pointer;flex-shrink:0;}
 .cart-empty{text-align:center;color:var(--muted);font-size:12px;padding:18px 6px;}
-.cart-bot{padding:8px 9px;border-top:1px solid var(--line);}
+.cart-bot{padding:8px 9px;border-top:1px solid var(--line);flex-shrink:0;}
 .cart-total{display:flex;justify-content:space-between;font-size:12px;margin-bottom:7px;}
 .cart-total-v{font-weight:900;color:var(--orange2);font-size:13px;}
 .send-btn{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--orange),#c0392b);color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
