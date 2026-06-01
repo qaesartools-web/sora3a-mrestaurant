@@ -72,6 +72,9 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
 .cart-total-v{font-weight:900;color:var(--orange2);font-size:13px;}
 .send-btn{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--orange),#c0392b);color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
 .send-btn:disabled{opacity:.4;cursor:not-allowed;}
+.send-wrap{position:fixed;bottom:50px;right:0;width:200px;padding:7px 9px;background:var(--panel);border-top:1px solid var(--line);border-right:1px solid var(--line);z-index:120;}
+@media(min-width:900px){.send-wrap{width:280px;}}
+@media(max-width:400px){.send-wrap{width:150px;}}
 
 /* MODALS */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
@@ -199,11 +202,11 @@ body{font-family:'Tajawal',sans-serif;background:#0d0f12;color:#f0f2f5;min-heigh
         <div class="cart-items" id="cartItems"><div class="cart-empty">السلة فارغة</div></div>
         <div class="cart-bot">
           <div class="cart-total"><span>المجموع</span><span class="cart-total-v" id="cartTotal">٠ د.ع</span></div>
-          <button class="send-btn" id="sendBtn" disabled onclick="openOrderType()">🚀 ترحيل الطلب</button>
         </div>
       </div>
     </div>
   </div>
+  <div class="send-wrap"><button class="send-btn" id="sendBtn" disabled onclick="openOrderType()">🚀 ترحيل الطلب</button></div>
 
   <!-- ORDERS SCREEN -->
   <div class="screen" id="ordersScreen">
