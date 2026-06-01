@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>سرعة - المطعم</title>
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="المطعم">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -627,7 +633,11 @@ async function finalOrder(type,captain){
   <div class="total"><span>المجموع</span><span>${fmt(total)} د.ع</span></div>
   <div class="div"></div>
   <div class="footer">شكراً لزيارتكم ❤️<br>07726537637</div>
-  </body></html>`;
+  <script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sora3a-mrestaurant/sw.js', {scope:'/sora3a-mrestaurant/'}).catch(()=>{});
+}
+</script></body></html>`;
 
   // Save to Firebase if captain
   if(type==='captain'&&restData&&captain){
@@ -693,5 +703,9 @@ window.switchTab=function(tab){
   document.getElementById('navOrders').classList.toggle('on',tab==='orders');
 };
 </script>
-</body>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sora3a-mrestaurant/sw.js', {scope:'/sora3a-mrestaurant/'}).catch(()=>{});
+}
+</script></body>
 </html>
